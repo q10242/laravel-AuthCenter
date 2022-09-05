@@ -18,10 +18,15 @@ const form = useForm({
     password: '',
     remember: false,
 });
+const params = new Proxy(new URLSearchParams(window.location.search), {
+  get: (searchParams, prop) => searchParams.get(prop),
+});
 
 const submit = () => {
     form.transform(data => ({
         ...data,
+        token_name:params.token_name,
+        redirect: params.redirect,
         remember: form.remember ? 'on' : '',
     })).post(route('login'), {
         onFinish: () => form.reset('password'),
