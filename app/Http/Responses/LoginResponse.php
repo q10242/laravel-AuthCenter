@@ -4,6 +4,7 @@ namespace App\Http\Responses;
  
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use Illuminate\Support\Facades\Auth;   
+use Inertia\Inertia;
 class LoginResponse implements LoginResponseContract
 {
     /**
@@ -15,11 +16,15 @@ class LoginResponse implements LoginResponseContract
         $returnUrl = route('home');
         if (null != $request->token_name) {
             $user = Auth::user();
-            $token = $user->createToken($request->token_name)->accessToken->token;
+            $token = $user->tokens()->where('name', $request->token_name)->first();
+            if (null == $token) {
+                $token = $user->createToken($request->token_name);
+            }
+            $token = $token->accessToken->token;
             if (null != $request->redirect) {
                 $returnUrl = urldecode($request->redirect).'?token='.$token;             
             }
         }
-        return redirect($returnUrl);
+        return Inertia::location($returnUrl);
     }
 }
