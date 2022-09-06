@@ -20,7 +20,7 @@ class LoginResponse implements LoginResponseContract
             if (null == $token) {
                 $token = $user->createToken($request->token_name);
             }
-            $token = $token->accessToken->token;
+            $token = $token->plainTextToken;
             if (null != $request->redirect) {
                 $returnUrl = urldecode($request->redirect).'?token='.$token;             
             }

@@ -10,5 +10,4 @@ this project is just for auth. other project can use this project to determine u
 
 note
 ---
-1. 不要重複發token （同一個app
-2. redirect到原本的app
+1 必須要解決container無法收到post request的問題
