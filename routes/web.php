@@ -38,3 +38,4 @@ Route::middleware([
 });
 
 Route::post('/logout', [AuthController::class, 'logout']);
+
