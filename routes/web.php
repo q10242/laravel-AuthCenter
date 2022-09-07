@@ -37,4 +37,3 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::post('/logout', [AuthController::class, 'logout']);
